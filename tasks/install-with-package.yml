@@ -2,6 +2,16 @@
 - name: Install Certbot.
   package: "name={{ certbot_package }} state=present"
 
+- name: Install Certbot Nginx Package.
+  package: "name={{ certbot_package_nginx }} state=present"
+  when:
+    - certbot_create_method == 'nginx'
+
+- name: Install Certbot Apache Package.
+  package: "name={{ certbot_package_apache }} state=present"
+  when:
+    - certbot_create_method == 'apache'
+
 - name: Set Certbot script variable.
   set_fact:
     certbot_script: "{{ certbot_package }}"
